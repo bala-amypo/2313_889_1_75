@@ -11,23 +11,17 @@ public class VisitorServiceImpl implements VisitorService {
 
     private final VisitorRepository rep;
 
-    public VisitorServiceImpl(VisitorRepository rep) {
-        this.rep = rep;
-    }
+    public VisitorServiceImpl(VisitorRepository rep) { this.rep = rep; }
 
     @Override
-    public Visitor postdata(Visitor st) {
-        return rep.save(st);
-    }
+    public Visitor postdata(Visitor st) { return rep.save(st); }
 
     @Override
-    public List<Visitor> getdata() {
-        return rep.findAll();
-    }
+    public List<Visitor> getdata() { return rep.findAll(); }
 
     @Override
     public Visitor getidvalue(Long id) {
         return rep.findById(id)
-                .orElseThrow(() -> new RuntimeException("Visitor not found with id: " + id));
+                  .orElseThrow(() -> new RuntimeException("Visitor not found with id: " + id));
     }
 }

@@ -1,25 +1,17 @@
 package com.example.demo.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 
 @RestController
-@RequestMapping("/api/auth")
-public class AuthController {
+@RequestMapping("/api/users")
+public class UserController {
 
     private final UserService src;
 
-    public AuthController(UserService src) {
-        this.src = src;
-    }
+    public UserController(UserService src) { this.src = src; }
 
     @PostMapping("/post")
-    public User insertdata(@RequestBody User st) {
-        return src.postdata(st);
-    }
+    public User insertdata(@RequestBody User st) { return src.postdata(st); }
 }

@@ -11,23 +11,17 @@ public class ScoreAuditLogServiceImpl implements ScoreAuditLogService {
 
     private final ScoreAuditLogRepository rep;
 
-    public ScoreAuditLogServiceImpl(ScoreAuditLogRepository rep) {
-        this.rep = rep;
-    }
+    public ScoreAuditLogServiceImpl(ScoreAuditLogRepository rep) { this.rep = rep; }
 
     @Override
-    public ScoreAuditLog postdata(ScoreAuditLog st) {
-        return rep.save(st);
-    }
+    public ScoreAuditLog postdata(ScoreAuditLog st) { return rep.save(st); }
 
     @Override
-    public List<ScoreAuditLog> getdata() {
-        return rep.findAll();
-    }
+    public List<ScoreAuditLog> getdata() { return rep.findAll(); }
 
     @Override
     public ScoreAuditLog getidvalue(Long id) {
         return rep.findById(id)
-                .orElseThrow(() -> new RuntimeException("ScoreAuditLog not found with id: " + id));
+                  .orElseThrow(() -> new RuntimeException("ScoreAuditLog not found with id: " + id));
     }
 }

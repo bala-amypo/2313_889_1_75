@@ -11,23 +11,17 @@ public class RiskRuleServiceImpl implements RiskRuleService {
 
     private final RiskRuleRepository rep;
 
-    public RiskRuleServiceImpl(RiskRuleRepository rep) {
-        this.rep = rep;
-    }
+    public RiskRuleServiceImpl(RiskRuleRepository rep) { this.rep = rep; }
 
     @Override
-    public RiskRule postdata(RiskRule st) {
-        return rep.save(st);
-    }
+    public RiskRule postdata(RiskRule st) { return rep.save(st); }
 
     @Override
-    public List<RiskRule> getdata() {
-        return rep.findAll();
-    }
+    public List<RiskRule> getdata() { return rep.findAll(); }
 
     @Override
     public RiskRule getidvalue(Long id) {
         return rep.findById(id)
-                .orElseThrow(() -> new RuntimeException("RiskRule not found with id: " + id));
+                  .orElseThrow(() -> new RuntimeException("RiskRule not found with id: " + id));
     }
 }

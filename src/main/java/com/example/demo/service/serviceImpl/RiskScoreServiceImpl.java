@@ -11,23 +11,17 @@ public class RiskScoreServiceImpl implements RiskScoreService {
 
     private final RiskScoreRepository rep;
 
-    public RiskScoreServiceImpl(RiskScoreRepository rep) {
-        this.rep = rep;
-    }
+    public RiskScoreServiceImpl(RiskScoreRepository rep) { this.rep = rep; }
 
     @Override
-    public RiskScore postdata(RiskScore st) {
-        return rep.save(st);
-    }
+    public RiskScore postdata(RiskScore st) { return rep.save(st); }
 
     @Override
-    public List<RiskScore> getdata() {
-        return rep.findAll();
-    }
+    public List<RiskScore> getdata() { return rep.findAll(); }
 
     @Override
     public RiskScore getidvalue(Long id) {
         return rep.findById(id)
-                .orElseThrow(() -> new RuntimeException("RiskScore not found with id: " + id));
+                  .orElseThrow(() -> new RuntimeException("RiskScore not found with id: " + id));
     }
 }

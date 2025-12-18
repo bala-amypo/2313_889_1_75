@@ -20,8 +20,7 @@ public class Visitor {
     private String idproof;
     private LocalDateTime createdAt;
 
-    public Visitor() {
-    }
+    public Visitor() {}
 
     public Visitor(Long id, String fullname, String email, String phone, String idproof,
                    LocalDateTime createdAt) {

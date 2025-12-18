@@ -1,7 +1,7 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "visit_logs")
@@ -16,8 +16,7 @@ public class VisitLog {
     private String purpose;
     private String location;
 
-    public VisitLog() {
-    }
+    public VisitLog() {}
 
     public VisitLog(Long id, LocalDateTime entryTime, LocalDateTime exitTime,
                     String purpose, String location) {

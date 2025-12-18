@@ -6,11 +6,11 @@ import com.example.demo.service.UserService;
 
 @RestController
 @RequestMapping("/api/users")
-public class UserController {
+public class AuthController {
 
     private final UserService src;
 
-    public UserController(UserService src) { this.src = src; }
+    public AuthController(UserService src) { this.src = src; }
 
     @PostMapping("/post")
     public User insertdata(@RequestBody User st) { return src.postdata(st); }

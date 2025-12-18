@@ -1,66 +1,30 @@
+package com.example.demo.model;
+
 import jakarta.persistence.*;
+import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "risk_scores")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class RiskScore {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(optional = false)
+    @OneToOne
     @JoinColumn(name = "visitor_id")
     private Visitor visitor;
 
-    @Column(nullable = false)
     private Integer totalScore;
-
-    @Column(nullable = false)
-    private String riskLevel; 
-    // LOW / MEDIUM / HIGH / CRITICAL
-
-    @Column(nullable = false)
+    private String riskLevel; // LOW, MEDIUM, HIGH, CRITICAL
     private LocalDateTime evaluatedAt;
 
     @PrePersist
-    @PreUpdate
-    public void evaluateRisk() {
-        if (totalScore == null || totalScore < 0) {
-            throw new RuntimeException("totalScore must be >= 0");
-        }
-
-        this.riskLevel = RiskLevelUtils.getRiskLevel(totalScore);
-        this.evaluatedAt = LocalDateTime.now();
-    }
-
-    // Getters and Setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public Visitor getVisitor() {
-        return visitor;
-    }
-
-    public void setVisitor(Visitor visitor) {
-        this.visitor = visitor;
-    }
-
-    public Integer getTotalScore() {
-        return totalScore;
-    }
-
-    public void setTotalScore(Integer totalScore) {
-        this.totalScore = totalScore;
-    }
-
-    public String getRiskLevel() {
-        return riskLevel;
-    }
-
-    public LocalDateTime getEvaluatedAt() {
-        return evaluatedAt;
+    protected void onPersist() {
+        if (totalScore < 0) totalScore = 0; // Rule: totalScore >= 0
+        evaluatedAt = LocalDateTime.now();
     }
 }

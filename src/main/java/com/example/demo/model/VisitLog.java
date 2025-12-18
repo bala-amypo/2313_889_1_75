@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "visit_logs")
+@Table(name="visit_log")
 public class VisitLog {
 
     @Id
@@ -18,8 +18,7 @@ public class VisitLog {
 
     public VisitLog() {}
 
-    public VisitLog(Long id, LocalDateTime entryTime, LocalDateTime exitTime,
-                    String purpose, String location) {
+    public VisitLog(Long id, LocalDateTime entryTime, LocalDateTime exitTime, String purpose, String location) {
         this.id = id;
         this.entryTime = entryTime;
         this.exitTime = exitTime;
@@ -27,19 +26,15 @@ public class VisitLog {
         this.location = location;
     }
 
-    // Getters and Setters
+    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-
     public LocalDateTime getEntryTime() { return entryTime; }
     public void setEntryTime(LocalDateTime entryTime) { this.entryTime = entryTime; }
-
     public LocalDateTime getExitTime() { return exitTime; }
     public void setExitTime(LocalDateTime exitTime) { this.exitTime = exitTime; }
-
     public String getPurpose() { return purpose; }
     public void setPurpose(String purpose) { this.purpose = purpose; }
-
     public String getLocation() { return location; }
     public void setLocation(String location) { this.location = location; }
 }

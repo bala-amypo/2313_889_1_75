@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 
-public class VisitorEntity {
+public class Visitor {
 @Id
     private Long id;
     private String fullname;
@@ -49,9 +49,9 @@ public class VisitorEntity {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-    public VisitorEntity() {
+    public Visitor() {
     }
-    public VisitorEntity(Long id, String fullname, String email, String phone, String idproof,
+    public Visitor(Long id, String fullname, String email, String phone, String idproof,
             LocalDateTime createdAt) {
         this.id = id;
         this.fullname = fullname;

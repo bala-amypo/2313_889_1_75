@@ -2,7 +2,7 @@ package com.example.demo.model;
 import java.time.LocalDate;
 
 import jakarta.persistence.*;
-public class RiskRuleEntity {
+public class RiskRule {
     @Id
     private Long id ;
     private String ruleName;
@@ -76,7 +76,7 @@ public class RiskRuleEntity {
     public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
-    public RiskRuleEntity(Long id, String ruleName, String aFTER_HOURS, String fREQUENT_VISITS, String bLACKLIST,
+    public RiskRule(Long id, String ruleName, String aFTER_HOURS, String fREQUENT_VISITS, String bLACKLIST,
             String kEYWORD, String cUSTOM, int threshold, int scoreImpact, LocalDate createdAt) {
         this.id = id;
         this.ruleName = ruleName;
@@ -89,7 +89,7 @@ public class RiskRuleEntity {
         this.scoreImpact = scoreImpact;
         this.createdAt = createdAt;
     }
-    public RiskRuleEntity() {
+    public RiskRule() {
     }
     
 

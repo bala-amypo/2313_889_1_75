@@ -14,10 +14,10 @@ import com.example.demo.service.VisitLogService;
 
 
 @Service
-public class VisitLogIServiceImpl implements VisitLogService {
+public class VisitLogServiceImpl implements VisitLogService {
     private final VisitLogRepository rep;
 
-    public VisitLogIServiceImpl(VisitLogRepository rep) {
+    public VisitLogServiceImpl(VisitLogRepository rep) {
         this.rep = rep;
     }
     @Override

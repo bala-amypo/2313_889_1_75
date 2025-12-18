@@ -1,5 +1,4 @@
- package com.example.demo.controller;
- package com.example.demo.service;
+package com.example.demo.controller;
 
 import java.util.List;
 
@@ -13,26 +12,28 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.RiskScore;
 import com.example.demo.service.RiskScoreService;
 
-
 @RestController
 @RequestMapping("/api/risk-scores")
 public class RiskScoreController {
+
     private final RiskScoreService src;
 
     public RiskScoreController(RiskScoreService src) {
         this.src = src;
     }
+
     @PostMapping("/post")
-    public RiskScore insertdata(@RequestBody RiskScore st){
+    public RiskScore insertData(@RequestBody RiskScore st) {
         return src.postdata(st);
     }
+
     @GetMapping("/get")
-    public List<RiskScore> wantData(){
+    public List<RiskScore> wantData() {
         return src.getdate();
     }
+
     @GetMapping("/getid/{id}")
-    public RiskScore particulardata(@PathVariable Long id){
+    public RiskScore particularData(@PathVariable Long id) {
         return src.getidvalue(id);
     }
-    
 }

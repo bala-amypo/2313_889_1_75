@@ -1,36 +1,83 @@
-package com.example.demo.model;
-
 import jakarta.persistence.*;
-import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Table(name = "score_audit_logs")
 public class ScoreAuditLog {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "visitor_id")
     private Visitor visitor;
 
-    @ManyToOne
-    @JoinColumn(name = "rule_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "risk_rule_id")
     private RiskRule appliedRule;
 
+    @Column(nullable = false)
     private Integer scoreChange;
+
+    @Column(nullable = false)
     private String reason;
+
+    @Column(nullable = false)
     private LocalDateTime loggedAt;
 
     @PrePersist
-    protected void onCreate() {
-        if (reason == null || reason.isEmpty()) {
+    public void onLog() {
+        if (scoreChange == null || scoreChange < 0) {
+            throw new RuntimeException("scoreChange must be >= 0");
+        }
+
+        if (reason == null || reason.trim().isEmpty()) {
             throw new RuntimeException("reason required");
         }
-        loggedAt = LocalDateTime.now();
+
+        this.loggedAt = LocalDateTime.now();
+    }
+
+    // Getters and Setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public Visitor getVisitor() {
+        return visitor;
+    }
+
+    public void setVisitor(Visitor visitor) {
+        this.visitor = visitor;
+    }
+
+    public RiskRule getAppliedRule() {
+        return appliedRule;
+    }
+
+    public void setAppliedRule(RiskRule appliedRule) {
+        this.appliedRule = appliedRule;
+    }
+
+    public Integer getScoreChange() {
+        return scoreChange;
+    }
+
+    public void setScoreChange(Integer scoreChange) {
+        this.scoreChange = scoreChange;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public LocalDateTime getLoggedAt() {
+        return loggedAt;
     }
 }

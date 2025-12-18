@@ -22,8 +22,7 @@ public class RiskScore {
 
     private LocalDate evaluatedAt;
 
-    public RiskScore() {
-    }
+    public RiskScore() {}
 
     public RiskScore(Long id, int totalScore, String LOW, String MEDIUM,
                      String HIGH, String CRITICAL, LocalDate evaluatedAt) {

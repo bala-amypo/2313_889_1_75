@@ -27,8 +27,7 @@ public class RiskRule {
 
     private LocalDate createdAt;
 
-    public RiskRule() {
-    }
+    public RiskRule() {}
 
     public RiskRule(Long id, String ruleName, String AFTER_HOURS, String FREQUENT_VISITS,
                     String BLACKLIST, String KEYWORD, String CUSTOM,

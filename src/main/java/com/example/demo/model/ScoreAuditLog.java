@@ -19,8 +19,7 @@ public class ScoreAuditLog {
 
     private LocalDate loggedAt;
 
-    public ScoreAuditLog() {
-    }
+    public ScoreAuditLog() {}
 
     public ScoreAuditLog(int scoreChange, String reason, LocalDate loggedAt) {
         this.scoreChange = scoreChange;

@@ -2,6 +2,8 @@ package com.example.demo.model;
 import java.time.LocalDate;
 
 import jakarta.persistence.*;
+@Model
+@Table(name="risk-rule")
 public class RiskRule {
     @Id
     private Long id ;

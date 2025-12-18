@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 
+@model
+@Table(name="Visitor")
 public class Visitor {
 @Id
     private Long id;

@@ -1,92 +1,96 @@
-pakage com.example.demo.model;
+package com.example.demo.model;
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
-
-@Entity
-@Table(
-    name = "risk_rules",
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = "ruleName")
-    }
-)
-public class RiskRule {
-
+public class RiskRuleEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false, unique = true)
+    private Long id ;
     private String ruleName;
-
-    @Column(nullable = false)
-    private String ruleType; 
-    // AFTER_HOURS / FREQUENT_VISITS / BLACKLIST / KEYWORD / CUSTOM
-
-    @Column(nullable = false)
-    private Integer threshold;
-
-    @Column(nullable = false)
-    private Integer scoreImpact;
-
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
-    @PrePersist
-    public void onCreate() {
-        if (threshold == null || threshold < 0) {
-            throw new RuntimeException("threshold must be >= 0");
-        }
-        if (scoreImpact == null || scoreImpact < 0) {
-            throw new RuntimeException("scoreImpact must be >= 0");
-        }
-        this.createdAt = LocalDateTime.now();
-    }
-
-    // Getters and Setters
-
+    private String AFTER_HOURS;
+    private String FREQUENT_VISITS;
+    private String BLACKLIST;
+    private String KEYWORD;
+    private String CUSTOM;
+    @Min(0)
+    private int threshold;
+    @Min(0)
+    private int scoreImpact;
+    private LocalDate createdAt;
     public Long getId() {
         return id;
     }
-
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getRuleName() {
         return ruleName;
     }
-
     public void setRuleName(String ruleName) {
         this.ruleName = ruleName;
     }
-
-    public String getRuleType() {
-        return ruleType;
+    public String getAFTER_HOURS() {
+        return AFTER_HOURS;
     }
-
-    public void setRuleType(String ruleType) {
-        this.ruleType = ruleType;
+    public void setAFTER_HOURS(String aFTER_HOURS) {
+        AFTER_HOURS = aFTER_HOURS;
     }
-
-    public Integer getThreshold() {
+    public String getFREQUENT_VISITS() {
+        return FREQUENT_VISITS;
+    }
+    public void setFREQUENT_VISITS(String fREQUENT_VISITS) {
+        FREQUENT_VISITS = fREQUENT_VISITS;
+    }
+    public String getBLACKLIST() {
+        return BLACKLIST;
+    }
+    public void setBLACKLIST(String bLACKLIST) {
+        BLACKLIST = bLACKLIST;
+    }
+    public String getKEYWORD() {
+        return KEYWORD;
+    }
+    public void setKEYWORD(String kEYWORD) {
+        KEYWORD = kEYWORD;
+    }
+    public String getCUSTOM() {
+        return CUSTOM;
+    }
+    public void setCUSTOM(String cUSTOM) {
+        CUSTOM = cUSTOM;
+    }
+    public int getThreshold() {
         return threshold;
     }
-
-    public void setThreshold(Integer threshold) {
-        if (threshold < 0) {
-            throw new RuntimeException("threshold must be >= 0");
-        }
+    public void setThreshold(int threshold) {
         this.threshold = threshold;
     }
-
-    public Integer getScoreImpact() {
+    public int getScoreImpact() {
         return scoreImpact;
     }
-
-    public void setScoreImpact(Integer scoreImpact) {
-        if (scoreImpact < 0) {
-            throw new RuntimeException("scoreImpact must be >= 0");
-        }
+    public void setScoreImpact(int scoreImpact) {
         this.scoreImpact = scoreImpact;
     }
-
-    public LocalDateTime getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+    public RiskRuleEntity(Long id, String ruleName, String aFTER_HOURS, String fREQUENT_VISITS, String bLACKLIST,
+            String kEYWORD, String cUSTOM, int threshold, int scoreImpact, LocalDate createdAt) {
+        this.id = id;
+        this.ruleName = ruleName;
+        AFTER_HOURS = aFTER_HOURS;
+        FREQUENT_VISITS = fREQUENT_VISITS;
+        BLACKLIST = bLACKLIST;
+        KEYWORD = kEYWORD;
+        CUSTOM = cUSTOM;
+        this.threshold = threshold;
+        this.scoreImpact = scoreImpact;
+        this.createdAt = createdAt;
+    }
+    public RiskRuleEntity() {
+    }
+    
+
 }

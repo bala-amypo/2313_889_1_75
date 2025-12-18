@@ -1,9 +1,7 @@
 package com.example.demo.service.serviceImpl;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import com.example.demo.model.ScoreAuditLog;
 import com.example.demo.repository.ScoreAuditLogRepository;
 import com.example.demo.service.ScoreAuditLogService;
@@ -30,7 +28,6 @@ public class ScoreAuditLogServiceImpl implements ScoreAuditLogService {
     @Override
     public ScoreAuditLog getidvalue(Long id) {
         return rep.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("ScoreAuditLog not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("ScoreAuditLog not found with id: " + id));
     }
 }

@@ -1,9 +1,7 @@
 package com.example.demo.service.serviceImpl;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import com.example.demo.model.VisitLog;
 import com.example.demo.repository.VisitLogRepository;
 import com.example.demo.service.VisitLogService;
@@ -30,7 +28,6 @@ public class VisitLogServiceImpl implements VisitLogService {
     @Override
     public VisitLog getidvalue(Long id) {
         return rep.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("VisitLog not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("VisitLog not found with id: " + id));
     }
 }

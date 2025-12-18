@@ -1,9 +1,7 @@
 package com.example.demo.service.serviceImpl;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import com.example.demo.model.RiskScore;
 import com.example.demo.repository.RiskScoreRepository;
 import com.example.demo.service.RiskScoreService;
@@ -30,7 +28,6 @@ public class RiskScoreServiceImpl implements RiskScoreService {
     @Override
     public RiskScore getidvalue(Long id) {
         return rep.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("RiskScore not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("RiskScore not found with id: " + id));
     }
 }

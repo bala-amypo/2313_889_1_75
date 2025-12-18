@@ -9,6 +9,6 @@ public interface RiskRuleService {
     RiskRule postdate(RiskRule st);
     List<RiskRule>getdata();
     RiskRule getidvalue(Long id);
-    RiskRule postdata(RiskRule st);
+    
 
 }

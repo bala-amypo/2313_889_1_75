@@ -9,6 +9,6 @@ public interface RiskScoreService {
     RiskScore postdate(RiskScore st);
     List<RiskScore>getdata();
     RiskScore getidvalue(Long id);
-    RiskScore postdata(RiskScore st);
+    
 
 }

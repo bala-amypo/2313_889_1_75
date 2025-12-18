@@ -1,6 +1,7 @@
 package com.example.demo.model;
 import jakarta.persistence.*;
-
+@Model
+@Table(name="user")
 public class User {
     @Id
     private Long id;

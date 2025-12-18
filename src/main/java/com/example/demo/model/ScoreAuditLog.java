@@ -3,6 +3,8 @@ import java.time.LocalDate;
 
 import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.XmlID;
+@Model
+@Table(name="Score")
 public class ScoreAuditLog {
     @Id
     private Long private;

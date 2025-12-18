@@ -1,7 +1,8 @@
 package com.example.demo.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-
+@Model
+@Tale(name="VisitLog")
 public class VisitLog {
     @Id
     private Long id;

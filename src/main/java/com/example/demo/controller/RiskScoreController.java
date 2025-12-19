@@ -7,7 +7,7 @@ import com.example.demo.service.ScoreAuditLogService;
 
 @RestController
 @RequestMapping("/api/score-logs")
-public class ScoreAuditLogController {
+public class RiskScoreController {
 
     private final ScoreAuditLogService src;
 

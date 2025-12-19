@@ -29,7 +29,7 @@ public class ScoreAuditLogController {
 
     @GetMapping("/get")
     public List<ScoreAuditLog> wantData() {
-        return src.getdate();
+        return src.getdata();
     }
 
     @GetMapping("/getid/{id}")

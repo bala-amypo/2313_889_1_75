@@ -6,7 +6,7 @@ import com.example.demo.model.RiskScore;
 import com.example.demo.service.RiskScoreService;
 
 @RestController
-@RequestMapping("/api/score-logs")
+@RequestMapping("/api/risk-scores")
 public class RiskScoreController {
 
     private final RiskScoreService src;

@@ -2,8 +2,8 @@ package com.example.demo.controller;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
-import com.example.demo.model.ScoreAuditLog;
-import com.example.demo.service.ScoreAuditLogService;
+import com.example.demo.model.RiskScore;
+import com.example.demo.service.RiskScoreService;
 
 @RestController
 @RequestMapping("/api/score-logs")

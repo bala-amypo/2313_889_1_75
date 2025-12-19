@@ -9,16 +9,16 @@ import com.example.demo.service.ScoreAuditLogService;
 @RequestMapping("/api/score-logs")
 public class RiskScoreController {
 
-    private final ScoreAuditLogService src;
+    private final RiskScoreService src;
 
-    public ScoreAuditLogController(ScoreAuditLogService src) { this.src = src; }
+    public RiskScoreController( RiskScoreService src) { this.src = src; }
 
     @PostMapping("/post")
-    public ScoreAuditLog insertdata(@RequestBody ScoreAuditLog st) { return src.postdata(st); }
+    public RiskScore insertdata(@RequestBody RiskScore st) { return src.postdata(st); }
 
     @GetMapping("/get")
-    public List<ScoreAuditLog> wantData() { return src.getdata(); }
+    public List<RiskScore> wantData() { return src.getdata(); }
 
     @GetMapping("/getid/{id}")
-    public ScoreAuditLog particulardata(@PathVariable Long id) { return src.getidvalue(id); }
+    public RiskScore particulardata(@PathVariable Long id) { return src.getidvalue(id); }
 }

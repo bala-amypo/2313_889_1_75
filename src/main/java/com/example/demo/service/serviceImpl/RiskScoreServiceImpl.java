@@ -21,7 +21,7 @@ public class RiskScoreServiceImpl implements RiskScoreService {
     }
 
     @Override
-    public RiskScore evaluateVisitor(Long visitorId) {
+    public RiskScore evaluate(Long visitorId) {
         Visitor visitor = visitorRepo.findById(visitorId)
                 .orElseThrow(() -> new ResourceNotFoundException("Visitor not found"));
 
@@ -40,13 +40,13 @@ public class RiskScoreServiceImpl implements RiskScoreService {
     }
 
     @Override
-    public RiskScore getScoreForVisitor(Long visitorId) {
+    public RiskScore get(Long visitorId) {
         return scoreRepo.findByVisitorId(visitorId)
                 .orElseThrow(() -> new ResourceNotFoundException("Score not found"));
     }
 
     @Override
-    public List<RiskScore> getAllScores() {
+    public List<RiskScore> all() {
         return scoreRepo.findAll();
     }
 }

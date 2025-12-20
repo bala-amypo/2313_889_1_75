@@ -18,19 +18,19 @@ public class ScoreAuditLogController {
     }
 
     @PostMapping("/{visitorId}/{ruleId}")
-    public ResponseEntity<ScoreAuditLog> logScoreChange(@PathVariable Long visitorId, 
+    public ResponseEntity<ScoreAuditLog> (@PathVariable Long visitorId, 
                                                         @PathVariable Long ruleId, 
                                                         @RequestBody ScoreAuditLog log) {
         return ResponseEntity.ok(auditLogService.logScoreChange(visitorId, ruleId, log));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ScoreAuditLog> getLog(@PathVariable Long id) {
-        return ResponseEntity.ok(auditLogService.getLog(id));
+    public ResponseEntity<ScoreAuditLog> get(@PathVariable Long id) {
+        return ResponseEntity.ok(auditLogService.get(id));
     }
 
     @GetMapping("/visitor/{visitorId}")
-    public ResponseEntity<List<ScoreAuditLog>> getLogsByVisitor(@PathVariable Long visitorId) {
-        return ResponseEntity.ok(auditLogService.getLogsByVisitor(visitorId));
+    public ResponseEntity<List<ScoreAuditLog>> logsByVisitor(@PathVariable Long visitorId) {
+        return ResponseEntity.ok(auditLogService.logsByVisitor(visitorId));
     }
 }

@@ -6,7 +6,7 @@ import java.util.Set;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor // REQUIRED: Fixes "no suitable constructor found"
+@AllArgsConstructor // REQUIRED: The test suite calls a constructor with 3 arguments
 public class AuthResponse {
     private String token;
     private String email;

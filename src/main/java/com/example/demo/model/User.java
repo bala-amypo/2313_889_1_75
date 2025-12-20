@@ -20,5 +20,6 @@ public class User {
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> role; 
+    // We name this 'roles' to match the DTO and avoid confusion
+    private Set<String> roles; 
 }

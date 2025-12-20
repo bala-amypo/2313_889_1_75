@@ -29,13 +29,15 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException("Email already exists");
         }
         
-        // Ensure roles are never null to prevent test failures
-        Set<String> roles = request.getRoles() != null ? request.getRoles() : new HashSet<>();
+        Set<String> roles = request.getRoles();
+        if (roles == null) {
+            roles = new HashSet<>();
+        }
 
         User user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(roles) 
+                .roles(roles) 
                 .build();
                 
         return userRepository.save(user);
@@ -50,12 +52,13 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException("Invalid credentials");
         }
 
-        String token = jwtTokenProvider.createToken(user.getEmail(), user.getRole());
+        // Passes email and roles to the provider
+        String token = jwtTokenProvider.createToken(user.getEmail(), user.getRoles());
 
         return AuthResponse.builder()
                 .token(token)
                 .email(user.getEmail())
-                .roles(user.getRole())
+                .roles(user.getRoles())
                 .build();
     }
 

@@ -26,7 +26,7 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    // MANDATORY FOR TESTS
+    // This is required for the Integration Tests to pass!
     public Claims getClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(secretKey)

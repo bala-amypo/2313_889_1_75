@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
-import java.util.List;
 import com.example.demo.model.VisitLog;
+import java.util.List;
 
 public interface VisitLogService {
-    VisitLog postdata(VisitLog st);
-    List<VisitLog> getdata();
-    VisitLog getidvalue(Long id);
+    VisitLog createVisitLog(Long visitorId, VisitLog log);
+    VisitLog getLog(Long id);
+    List<VisitLog> getLogsByVisitor(Long visitorId);
 }

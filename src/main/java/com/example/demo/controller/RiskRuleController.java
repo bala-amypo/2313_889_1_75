@@ -1,35 +1,36 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.RiskScore;
-import com.example.demo.service.RiskScoreService;
+import com.example.demo.model.RiskRule;
+import com.example.demo.service.RiskRuleService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/risk-scores")
-@Tag(name = "RiskScore")
-public class RiskScoreController {
-    private final RiskScoreService service;
+@RequestMapping("/api/risk-rules")
+@Tag(name = "RiskRule")
+public class RiskRuleController {
+    private final RiskRuleService service;
 
-    public RiskScoreController(RiskScoreService service) {
+    public RiskRuleController(RiskRuleService service) {
         this.service = service;
     }
 
-    @PostMapping("/evaluate/{visitorId}")
-    public ResponseEntity<RiskScore> evaluate(@PathVariable Long visitorId) {
-        return ResponseEntity.ok(service.evaluateVisitor(visitorId));
+    @PostMapping
+    public ResponseEntity<RiskRule> create(@RequestBody RiskRule rule) {
+        return new ResponseEntity<>(service.createRule(rule), HttpStatus.CREATED);
     }
 
-    @GetMapping("/{visitorId}")
-    public ResponseEntity<RiskScore> get(@PathVariable Long visitorId) {
-        return ResponseEntity.ok(service.getScoreForVisitor(visitorId));
+    @GetMapping("/{id}")
+    public ResponseEntity<RiskRule> get(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getRule(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<RiskScore>> all() {
-        return ResponseEntity.ok(service.getAllScores());
+    public ResponseEntity<List<RiskRule>> all() {
+        return ResponseEntity.ok(service.getAllRules());
     }
 }

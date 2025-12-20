@@ -1,4 +1,3 @@
-
 package com.example.demo.dto;
 
 import lombok.*;
@@ -11,6 +10,6 @@ import java.util.Set;
 public class RegisterRequest {
     private String email;
     private String password;
-    // Must be plural 'roles' to match the test's setRoles() call
+    // This MUST be 'roles' (plural) because the test calls setRoles()
     private Set<String> roles; 
 }

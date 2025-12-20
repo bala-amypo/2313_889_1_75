@@ -12,6 +12,7 @@ public class JwtTokenProvider {
     private final String secretKey = "VisitorRiskSecretKeyForTestingPurposeOnlyChangeInProduction";
     private final long validityInMilliseconds = 3600000;
 
+    // FIX: Remove any 'long id' parameter. It must be exactly (String email, Set roles)
     public String createToken(String email, Set<String> roles) {
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("roles", roles);
@@ -26,7 +27,7 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    // This is required for the Integration Tests to pass!
+    // FIX: Add this method. Your logs show "cannot find symbol: method getClaims"
     public Claims getClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(secretKey)

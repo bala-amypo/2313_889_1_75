@@ -6,9 +6,14 @@ import java.util.Set;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor // This generates the 3-argument constructor needed by the test
+@AllArgsConstructor 
 public class AuthResponse {
     private String token;
     private String email;
     private Set<String> roles;
+
+    // ADD THIS CONSTRUCTOR: The test specifically looks for this
+    public AuthResponse(String token) {
+        this.token = token;
+    }
 }

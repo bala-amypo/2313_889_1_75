@@ -1,24 +1,34 @@
 package com.example.demo.controller;
 
-import java.util.List;
-import org.springframework.web.bind.annotation.*;
 import com.example.demo.model.Visitor;
 import com.example.demo.service.VisitorService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/visitors")
+@Tag(name = "Visitor Controller")
 public class VisitorController {
+    private final VisitorService visitorService;
 
-    private final VisitorService src;
+    public VisitorController(VisitorService visitorService) {
+        this.visitorService = visitorService;
+    }
 
-    public VisitorController(VisitorService src) { this.src = src; }
+    @PostMapping
+    public ResponseEntity<Visitor> createVisitor(@RequestBody Visitor visitor) {
+        return ResponseEntity.ok(visitorService.createVisitor(visitor));
+    }
 
-    @PostMapping("/post")
-    public Visitor insertdata(@RequestBody Visitor st) { return src.postdata(st); }
+    @GetMapping("/{id}")
+    public ResponseEntity<Visitor> getVisitor(@PathVariable Long id) {
+        return ResponseEntity.ok(visitorService.getVisitor(id));
+    }
 
-    @GetMapping("/get")
-    public List<Visitor> wantData() { return src.getdata(); }
-
-    @GetMapping("/getid/{id}")
-    public Visitor particulardata(@PathVariable Long id) { return src.getidvalue(id); }
+    @GetMapping
+    public ResponseEntity<List<Visitor>> getAllVisitors() {
+        return ResponseEntity.ok(visitorService.getAllVisitors());
+    }
 }

@@ -12,7 +12,7 @@ public class JwtTokenProvider {
     private final String secretKey = "VisitorRiskSecretKeyForTestingPurposeOnly";
     private final long validityInMilliseconds = 3600000; // 1h
 
-    // Update signature to (String email, Set<String> roles) to match the test
+    // Signature must be (String email, Set<String> roles)
     public String createToken(String email, Set<String> roles) {
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("roles", roles);

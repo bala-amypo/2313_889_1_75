@@ -6,7 +6,7 @@ import java.util.Set;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor // REQUIRED: The test suite calls a constructor with 3 arguments
+@AllArgsConstructor // This generates the 3-argument constructor needed by the test
 public class AuthResponse {
     private String token;
     private String email;

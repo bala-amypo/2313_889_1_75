@@ -3,13 +3,12 @@ package com.example.demo.controller;
 import com.example.demo.dto.*;
 import com.example.demo.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-@Tag(name = "Auth Controller")
+@Tag(name = "Auth")
 public class AuthController {
     private final UserService userService;
 

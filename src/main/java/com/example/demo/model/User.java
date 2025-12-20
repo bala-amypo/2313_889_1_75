@@ -17,9 +17,8 @@ public class User {
 
     @Column(unique = true)
     private String email;
-
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> role; // Must be 'role' to match UserServiceImpl .role()
+    private Set<String> role; 
 }

@@ -29,12 +29,8 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException("Email already exists");
         }
         
-        // Ensure roles are never null
-        Set<String> roles = request.getRoles();
-        if (roles == null || roles.isEmpty()) {
-            roles = new HashSet<>();
-            roles.add("ROLE_USER"); 
-        }
+        // Ensure roles are never null to prevent test failures
+        Set<String> roles = request.getRoles() != null ? request.getRoles() : new HashSet<>();
 
         User user = User.builder()
                 .email(request.getEmail())

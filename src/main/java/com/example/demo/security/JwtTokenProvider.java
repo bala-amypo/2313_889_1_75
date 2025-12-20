@@ -9,10 +9,10 @@ import java.util.Set;
 
 @Component
 public class JwtTokenProvider {
-    private final String secretKey = "VisitorRiskSecretKeyForTestingPurposeOnly";
+    private final String secretKey = "VisitorRiskSecretKeyForTestingPurposeOnlyChangeInProduction";
     private final long validityInMilliseconds = 3600000; // 1h
 
-    // Signature must be (String email, Set<String> roles)
+    // Signature matches test requirement: (String, Set)
     public String createToken(String email, Set<String> roles) {
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("roles", roles);
@@ -27,6 +27,18 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    // REQUIRED BY INTEGRATION TEST: Fixed the "cannot find symbol" error
+    public Claims getClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    public String getEmail(String token) {
+        return getClaims(token).getSubject();
+    }
+
     public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
@@ -34,9 +46,5 @@ public class JwtTokenProvider {
         } catch (Exception e) {
             return false;
         }
-    }
-
-    public String getEmail(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 }

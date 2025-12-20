@@ -19,11 +19,11 @@ public class RiskScoreController {
 
     @PostMapping("/evaluate/{visitorId}")
     public ResponseEntity<RiskScore> evaluate(@PathVariable Long visitorId) {
-        return ResponseEntity.ok(riskScoreService.evaluateVisitor(visitorId));
+        return ResponseEntity.ok(riskScoreService.evaluate(visitorId));
     }
 
     @GetMapping("/{visitorId}")
-    public ResponseEntity<RiskScore> getScoreForVisitor(@PathVariable Long visitorId) {
+    public ResponseEntity<RiskScore> get@PathVariable Long visitorId) {
         return ResponseEntity.ok(riskScoreService.getScoreForVisitor(visitorId));
     }
 

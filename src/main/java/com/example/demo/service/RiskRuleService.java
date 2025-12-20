@@ -4,7 +4,7 @@ import com.example.demo.model.RiskRule;
 import java.util.List;
 
 public interface RiskRuleService {
-    RiskRule createRule(RiskRule rule);
-    List<RiskRule> getAllRules();
-    RiskRule getRule(Long id);
+    RiskRule create(RiskRule rule);
+    List<RiskRule> all();
+    RiskRule get(Long id);
 }

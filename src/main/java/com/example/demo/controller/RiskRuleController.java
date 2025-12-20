@@ -18,17 +18,17 @@ public class RiskRuleController {
     }
 
     @PostMapping
-    public ResponseEntity<RiskRule> createRule(@RequestBody RiskRule rule) {
-        return ResponseEntity.ok(riskRuleService.createRule(rule));
+    public ResponseEntity<RiskRule> create(@RequestBody RiskRule rule) {
+        return ResponseEntity.ok(riskRuleService.create(rule));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RiskRule> getRule(@PathVariable Long id) {
-        return ResponseEntity.ok(riskRuleService.getRule(id));
+    public ResponseEntity<RiskRule> get(@PathVariable Long id) {
+        return ResponseEntity.ok(riskRuleService.get(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<RiskRule>> getAllRules() {
-        return ResponseEntity.ok(riskRuleService.getAllRules());
+    public ResponseEntity<List<RiskRule>> all() {
+        return ResponseEntity.ok(riskRuleService.all());
     }
 }

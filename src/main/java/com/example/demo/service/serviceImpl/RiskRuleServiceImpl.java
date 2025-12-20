@@ -17,7 +17,7 @@ public class RiskRuleServiceImpl implements RiskRuleService {
     }
 
     @Override
-    public RiskRule createRule(RiskRule rule) {
+    public RiskRule create(RiskRule rule) {
         if (repository.findByRuleName(rule.getRuleName()).isPresent()) {
             throw new BadRequestException("Rule name must be unique");
         }
@@ -25,12 +25,12 @@ public class RiskRuleServiceImpl implements RiskRuleService {
     }
 
     @Override
-    public List<RiskRule> getAllRules() {
+    public List<RiskRule> all() {
         return repository.findAll();
     }
 
     @Override
-    public RiskRule getRule(Long id) {
+    public RiskRule get(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Rule not found"));
     }

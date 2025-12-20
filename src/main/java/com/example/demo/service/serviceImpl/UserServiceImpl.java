@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
         User user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(request.getRole() != null ? request.getRole() : new HashSet<>())
+                .role(request.getRoles() != null ? request.getRoles() : new HashSet<>())
                 .build();
 
         return userRepository.save(user);

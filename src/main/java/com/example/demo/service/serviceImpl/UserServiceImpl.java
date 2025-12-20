@@ -53,7 +53,7 @@ public AuthResponse login(AuthRequest request) {
     }
 
     // FIX: Only pass email and roles. REMOVE user.getId() from here.
-    String token = jwtTokenProvider.createToken(user.getEmail(), user.getRole());
+    String token = jwtTokenProvider.createToken(user.getEmail(), user.getRoles());
 
     return AuthResponse.builder()
             .token(token)

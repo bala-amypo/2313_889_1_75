@@ -32,6 +32,7 @@ public class VisitorServiceImpl implements VisitorService {
 
     @Override
     public List<Visitor> getAllVisitors() {
-        return visitorRepository.findAll();
+        List<Visitor> visitors = visitorRepository.findAll();
+        return visitors != null ? visitors : List.of();
     }
 }

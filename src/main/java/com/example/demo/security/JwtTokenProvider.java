@@ -3,29 +3,26 @@ package com.example.demo.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.security.Key;
+import jakarta.annotation.PostConstruct; // Use jakarta instead of javax for Spring Boot 3
 import java.util.Base64;
 import java.util.Date;
 import java.util.Set;
 
 @Component
 public class JwtTokenProvider {
-    // Secret key must be long enough for HS256 (at least 256 bits)
+
     private String secretKey = "VisitorRiskSecretKeyForTestingPurposeOnlyChangeInProduction";
     private final long validityInMilliseconds = 3600000; // 1h
-    private Key signingKey;
 
     @PostConstruct
     protected void init() {
-        // Encode the key to ensure it's handled as a byte array correctly
-        this.signingKey = Keys.hmacShaKeyFor(secretKey.getBytes());
+        // Base64 encode the secret key to ensure consistency across versions
+        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    // Fixes the "required: java.lang.String, java.util.Set found: long..." error
+    // Matches the test requirement: (String, Set)
     public String createToken(String email, Set<String> roles) {
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("roles", roles);
@@ -37,33 +34,21 @@ public class JwtTokenProvider {
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(validity)
-                .signWith(signingKey, SignatureAlgorithm.HS256) // Modern signature
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
     public String getEmail(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(signingKey)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
     public Claims getClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(signingKey)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
     }
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder()
-                .setSigningKey(signingKey)
-                .build()
-                .parseClaimsJws(token);
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return true;
         } catch (Exception e) {
             return false;

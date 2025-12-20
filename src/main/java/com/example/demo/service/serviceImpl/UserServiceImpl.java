@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-   @Override
+@Override
 public AuthResponse login(AuthRequest request) {
     User user = userRepository.findByEmail(request.getEmail())
             .orElseThrow(() -> new BadRequestException("Invalid credentials"));
@@ -52,8 +52,8 @@ public AuthResponse login(AuthRequest request) {
         throw new BadRequestException("Invalid credentials");
     }
 
-    // FIX: Only pass email and roles. REMOVE user.getId() from here.
-    String token = jwtTokenProvider.createToken(user.getEmail(), user.getRoles());
+    // PASS THE ID: Use the user's ID from the database
+    String token = jwtTokenProvider.createToken(user.getId(), user.getEmail(), user.getRoles());
 
     return AuthResponse.builder()
             .token(token)

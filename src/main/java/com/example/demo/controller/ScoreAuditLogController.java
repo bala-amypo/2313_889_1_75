@@ -24,7 +24,6 @@ public class ScoreAuditLogController {
             @PathVariable Long visitorId, 
             @PathVariable Long ruleId, 
             @RequestBody ScoreAuditLog log) {
-        // This helps verify the "reason required" validation test
         return new ResponseEntity<>(service.logScoreChange(visitorId, ruleId, log), HttpStatus.CREATED);
     }
 

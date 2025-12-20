@@ -1,39 +1,36 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.example.demo.model.ScoreAuditLog;
 import com.example.demo.service.ScoreAuditLogService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/score-logs")
+@Tag(name = "Score Audit Log Controller")
 public class ScoreAuditLogController {
+    private final ScoreAuditLogService auditLogService;
 
-    private final ScoreAuditLogService src;
-
-    public ScoreAuditLogController(ScoreAuditLogService src) {
-        this.src = src;
+    public ScoreAuditLogController(ScoreAuditLogService auditLogService) {
+        this.auditLogService = auditLogService;
     }
 
-    @PostMapping("/post")
-    public ScoreAuditLog insertData(@RequestBody ScoreAuditLog st) {
-        return src.postdata(st);
+    @PostMapping("/{visitorId}/{ruleId}")
+    public ResponseEntity<ScoreAuditLog> logScoreChange(@PathVariable Long visitorId, 
+                                                        @PathVariable Long ruleId, 
+                                                        @RequestBody ScoreAuditLog log) {
+        return ResponseEntity.ok(auditLogService.logScoreChange(visitorId, ruleId, log));
     }
 
-    @GetMapping("/get")
-    public List<ScoreAuditLog> wantData() {
-        return src.getdata();
+    @GetMapping("/{id}")
+    public ResponseEntity<ScoreAuditLog> getLog(@PathVariable Long id) {
+        return ResponseEntity.ok(auditLogService.getLog(id));
     }
 
-    @GetMapping("/getid/{id}")
-    public ScoreAuditLog particularData(@PathVariable Long id) {
-        return src.getidvalue(id);
+    @GetMapping("/visitor/{visitorId}")
+    public ResponseEntity<List<ScoreAuditLog>> getLogsByVisitor(@PathVariable Long visitorId) {
+        return ResponseEntity.ok(auditLogService.getLogsByVisitor(visitorId));
     }
 }

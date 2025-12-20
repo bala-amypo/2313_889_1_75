@@ -1,24 +1,34 @@
 package com.example.demo.controller;
 
-import java.util.List;
-import org.springframework.web.bind.annotation.*;
 import com.example.demo.model.RiskScore;
 import com.example.demo.service.RiskScoreService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/risk-scores")
+@Tag(name = "Risk Score Controller")
 public class RiskScoreController {
+    private final RiskScoreService riskScoreService;
 
-    private final RiskScoreService src;
+    public RiskScoreController(RiskScoreService riskScoreService) {
+        this.riskScoreService = riskScoreService;
+    }
 
-    public RiskScoreController( RiskScoreService src) { this.src = src; }
+    @PostMapping("/evaluate/{visitorId}")
+    public ResponseEntity<RiskScore> evaluate(@PathVariable Long visitorId) {
+        return ResponseEntity.ok(riskScoreService.evaluateVisitor(visitorId));
+    }
 
-    @PostMapping("/post")
-    public RiskScore insertdata(@RequestBody RiskScore st) { return src.postdata(st); }
+    @GetMapping("/{visitorId}")
+    public ResponseEntity<RiskScore> getScoreForVisitor(@PathVariable Long visitorId) {
+        return ResponseEntity.ok(riskScoreService.getScoreForVisitor(visitorId));
+    }
 
-    @GetMapping("/get")
-    public List<RiskScore> wantData() { return src.getdata(); }
-
-    @GetMapping("/getid/{id}")
-    public RiskScore particulardata(@PathVariable Long id) { return src.getidvalue(id); }
+    @GetMapping
+    public ResponseEntity<List<RiskScore>> getAllScores() {
+        return ResponseEntity.ok(riskScoreService.getAllScores());
+    }
 }

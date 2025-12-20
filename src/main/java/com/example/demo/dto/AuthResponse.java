@@ -6,7 +6,7 @@ import java.util.Set;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor // This fixes the "no suitable constructor found" error
 public class AuthResponse {
     private String token;
     private String email;

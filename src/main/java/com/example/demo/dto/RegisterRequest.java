@@ -1,9 +1,6 @@
 package com.example.demo.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import java.util.Set;
 
 @Data
@@ -13,5 +10,5 @@ import java.util.Set;
 public class RegisterRequest {
     private String email;
     private String password;
-    private Set<String> role;
+    private Set<String> roles; // Changed from 'role' to 'roles' to fix setRoles() error
 }

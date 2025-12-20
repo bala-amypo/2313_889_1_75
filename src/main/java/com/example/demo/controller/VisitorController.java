@@ -1,3 +1,14 @@
+package com.example.demo.controller;
+
+import com.example.demo.model.Visitor;
+import com.example.demo.service.VisitorService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/visitors")
 @Tag(name = "Visitor")

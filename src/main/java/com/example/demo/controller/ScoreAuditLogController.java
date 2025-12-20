@@ -1,3 +1,14 @@
+package com.example.demo.controller;
+
+import com.example.demo.model.ScoreAuditLog;
+import com.example.demo.service.ScoreAuditLogService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/score-logs")
 @Tag(name = "ScoreAuditLog")
@@ -9,7 +20,11 @@ public class ScoreAuditLogController {
     }
 
     @PostMapping("/{visitorId}/{ruleId}")
-    public ResponseEntity<ScoreAuditLog> create(@PathVariable Long visitorId, @PathVariable Long ruleId, @RequestBody ScoreAuditLog log) {
+    public ResponseEntity<ScoreAuditLog> create(
+            @PathVariable Long visitorId, 
+            @PathVariable Long ruleId, 
+            @RequestBody ScoreAuditLog log) {
+        // This helps verify the "reason required" validation test
         return new ResponseEntity<>(service.logScoreChange(visitorId, ruleId, log), HttpStatus.CREATED);
     }
 

@@ -10,6 +10,6 @@ import java.util.Set;
 public class RegisterRequest {
     private String email;
     private String password;
-    // This MUST be 'roles' (plural) because the test calls setRoles()
+    // Must be 'roles' (plural) to fix the setRoles() compilation error
     private Set<String> roles; 
 }

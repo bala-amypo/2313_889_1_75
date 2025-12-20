@@ -1,4 +1,3 @@
-
 package com.example.demo.dto;
 
 import lombok.*;
@@ -13,7 +12,7 @@ public class AuthResponse {
     private String email;
     private Set<String> roles;
 
-    // MANDATORY: The integration test specifically calls this constructor
+    // The test specifically calls a constructor with just the token
     public AuthResponse(String token) {
         this.token = token;
     }

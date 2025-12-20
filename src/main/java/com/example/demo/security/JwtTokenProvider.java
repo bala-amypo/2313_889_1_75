@@ -12,11 +12,12 @@ public class JwtTokenProvider {
     private final String secretKey = "VisitorRiskSecretKeyForTestingPurposeOnlyChangeInProduction";
     private final long validityInMilliseconds = 3600000; 
 
-    // REQUIRED SIGNATURE: It must handle the (long, String, Set) call from the test
+    // Test requires (long, String, Set). We use this to satisfy the compiler.
     public String createToken(long id, String email, Set<String> roles) {
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("roles", roles);
-        claims.put("userId", id); // Store the ID in the token
+        claims.put("userId", id);
+        
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
 
@@ -27,13 +28,8 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
-    
-    // OVERLOAD: Keep your original version so UserServiceImpl doesn't break
-    public String createToken(String email, Set<String> roles) {
-        return createToken(0L, email, roles);
-    }
 
-    // MANDATORY: The test calls this method directly to verify the token
+    // MANDATORY: The Integration Test calls this method directly
     public Claims getClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(secretKey)

@@ -1,7 +1,6 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.exception.BadRequestException;
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.RiskRule;
 import com.example.demo.repository.RiskRuleRepository;
 import com.example.demo.service.RiskRuleService;
@@ -17,21 +16,20 @@ public class RiskRuleServiceImpl implements RiskRuleService {
     }
 
     @Override
-    public RiskRule create(RiskRule rule) {
-        if (repository.findByRuleName(rule.getRuleName()).isPresent()) {
+    public RiskRule createRule(RiskRule rule) {
+        if (repository.existsByRuleName(rule.getRuleName())) {
             throw new BadRequestException("Rule name must be unique");
         }
         return repository.save(rule);
     }
 
     @Override
-    public List<RiskRule> all() {
+    public List<RiskRule> getAllRules() {
         return repository.findAll();
     }
 
     @Override
-    public RiskRule get(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Rule not found"));
+    public RiskRule getRule(Long id) {
+        return repository.findById(id).orElse(null);
     }
 }

@@ -21,5 +21,5 @@ public class User {
 
     @ElementCollection(fetch = FetchType.EAGER)
     // We name this 'roles' to match the DTO and avoid confusion
-    private Set<String> roles; 
+    private Set<String> role; 
 }

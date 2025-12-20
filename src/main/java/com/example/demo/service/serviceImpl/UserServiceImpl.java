@@ -9,6 +9,7 @@ import com.example.demo.exception.BadRequestException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -28,11 +29,17 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException("Email already exists");
         }
         
+        // Ensure roles are never null
+        Set<String> roles = request.getRoles();
+        if (roles == null || roles.isEmpty()) {
+            roles = new HashSet<>();
+            roles.add("ROLE_USER"); 
+        }
+
         User user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                // Handle possible null roles from the test request
-                .role(request.getRoles() != null ? request.getRoles() : new HashSet<>())
+                .role(roles) 
                 .build();
                 
         return userRepository.save(user);
@@ -47,7 +54,6 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException("Invalid credentials");
         }
 
-        // Correctly passes the email String
         String token = jwtTokenProvider.createToken(user.getEmail(), user.getRole());
 
         return AuthResponse.builder()

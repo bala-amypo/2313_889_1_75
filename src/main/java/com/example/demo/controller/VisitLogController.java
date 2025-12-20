@@ -23,12 +23,12 @@ public class VisitLogController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<VisitLog> get(@PathVariable Long id) {
-        return ResponseEntity.ok(visitLogService.get(id));
+    public ResponseEntity<VisitLog> listByVisitor(@PathVariable Long id) {
+        return ResponseEntity.ok(visitLogService.listByVisitor(id));
     }
 
     @GetMapping("/visitor/{visitorId}")
-    public ResponseEntity<List<VisitLog>> listByVisitor(@PathVariable Long visitorId) {
-        return ResponseEntity.ok(visitLogService.listByVisitor(visitorId));
+    public ResponseEntity<List<VisitLog>> get(@PathVariable Long visitorId) {
+        return ResponseEntity.ok(visitLogService.get(visitorId));
     }
 }

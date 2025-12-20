@@ -36,12 +36,12 @@ public class VisitLogServiceImpl implements VisitLogService {
     }
 
     @Override
-    public List<VisitLog> listByVisitor(Long visitorId) {
+    public List<VisitLog> get(Long visitorId) {
         return logRepository.findByVisitorId(visitorId);
     }
 
     @Override
-    public VisitLog get(Long id) {
+    public VisitLog listByVisitor(Long id) {
         return logRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Log not found"));
     }

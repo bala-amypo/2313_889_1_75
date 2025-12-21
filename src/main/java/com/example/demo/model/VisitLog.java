@@ -1,38 +1,40 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
-import lombok.*;
 import java.time.LocalDateTime;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "visit_logs")
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Table(name="visit_log")
 public class VisitLog {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "visitor_id", nullable = false)
-    private Visitor visitor;
-
     private LocalDateTime entryTime;
-
     private LocalDateTime exitTime;
-
-    @Column(nullable = false)
     private String purpose;
-
-    @Column(nullable = false)
     private String location;
 
-    @PrePersist
-    public void prePersist() {
-        if (this.entryTime == null) {
-            this.entryTime = LocalDateTime.now();
-        }
+    public VisitLog() {}
+
+    public VisitLog(Long id, LocalDateTime entryTime, LocalDateTime exitTime, String purpose, String location) {
+        this.id = id;
+        this.entryTime = entryTime;
+        this.exitTime = exitTime;
+        this.purpose = purpose;
+        this.location = location;
     }
+
+    // Getters & Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public LocalDateTime getEntryTime() { return entryTime; }
+    public void setEntryTime(LocalDateTime entryTime) { this.entryTime = entryTime; }
+    public LocalDateTime getExitTime() { return exitTime; }
+    public void setExitTime(LocalDateTime exitTime) { this.exitTime = exitTime; }
+    public String getPurpose() { return purpose; }
+    public void setPurpose(String purpose) { this.purpose = purpose; }
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
 }

@@ -1,37 +1,27 @@
-package com.example.demo.service.impl;
+package com.example.demo.service.serviceImpl;
 
-import com.example.demo.exception.BadRequestException;
+import java.util.List;
+import org.springframework.stereotype.Service;
 import com.example.demo.model.Visitor;
 import com.example.demo.repository.VisitorRepository;
 import com.example.demo.service.VisitorService;
-import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class VisitorServiceImpl implements VisitorService {
-    private final VisitorRepository repository;
 
-    public VisitorServiceImpl(VisitorRepository repository) {
-        this.repository = repository;
-    }
+    private final VisitorRepository rep;
 
-    @Override
-    public Visitor createVisitor(Visitor visitor) {
-        if (visitor.getPhone() == null || visitor.getPhone().trim().isEmpty()) {
-            throw new BadRequestException("phone required");
-        }
-        return repository.save(visitor);
-    }
+    public VisitorServiceImpl(VisitorRepository rep) { this.rep = rep; }
 
     @Override
-    public List<Visitor> getAllVisitors() {
-        List<Visitor> list = repository.findAll();
-        return list != null ? list : new ArrayList<>();
-    }
+    public Visitor postdata(Visitor st) { return rep.save(st); }
 
     @Override
-    public Visitor getVisitor(Long id) {
-        return repository.findById(id).orElse(null);
+    public List<Visitor> getdata() { return rep.findAll(); }
+
+    @Override
+    public Visitor getidvalue(Long id) {
+        return rep.findById(id)
+                  .orElseThrow(() -> new RuntimeException("Visitor not found with id: " + id));
     }
 }

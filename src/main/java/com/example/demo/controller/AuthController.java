@@ -1,17 +1,28 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.*;
+import com.example.demo.model.*;
+import com.example.demo.service.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.demo.model.User;
-import com.example.demo.service.UserService;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/auth")
 public class AuthController {
 
-    private final UserService src;
+    private final UserService userService;
 
-    public AuthController(UserService src) { this.src = src; }
+    public AuthController(UserService userService) {
+        this.userService = userService;
+    }
 
-    @PostMapping("/post")
-    public User insertdata(@RequestBody User st) { return src.postdata(st); }
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@RequestBody RegisterRequest request) {
+        return ResponseEntity.ok(userService.register(request));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
+        return ResponseEntity.ok(userService.login(request));
+    }
 }

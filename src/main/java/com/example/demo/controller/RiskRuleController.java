@@ -1,24 +1,39 @@
 package com.example.demo.controller;
 
-import java.util.List;
-import org.springframework.web.bind.annotation.*;
 import com.example.demo.model.RiskRule;
 import com.example.demo.service.RiskRuleService;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.*;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/risk-rules")
 public class RiskRuleController {
 
-    private final RiskRuleService src;
+    private final RiskRuleService riskRuleService;
 
-    public RiskRuleController(RiskRuleService src) { this.src = src; }
+    public RiskRuleController(RiskRuleService riskRuleService) {
+        this.riskRuleService = riskRuleService;
+    }
 
-    @PostMapping("/post")
-    public RiskRule insertdata(@RequestBody RiskRule st) { return src.postdata(st); }
+    @PostMapping
+    public ResponseEntity<RiskRule> create(@RequestBody RiskRule rule) {
+        return ResponseEntity.ok(
+                riskRuleService.createRule(rule)
+        );
+    }
 
-    @GetMapping("/get")
-    public List<RiskRule> wantData() { return src.getdata(); }
+    @GetMapping("/{id}")
+    public ResponseEntity<RiskRule> get(@PathVariable Long id) {
+        return ResponseEntity.ok(
+                riskRuleService.getRule(id)
+        );
+    }
 
-    @GetMapping("/getid/{id}")
-    public RiskRule particulardata(@PathVariable Long id) { return src.getidvalue(id); }
+    @GetMapping
+    public ResponseEntity<List<RiskRule>> all() {
+        return ResponseEntity.ok(
+                riskRuleService.getAllRules()
+        );
+    }
 }

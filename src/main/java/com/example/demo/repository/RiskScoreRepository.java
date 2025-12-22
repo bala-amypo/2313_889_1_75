@@ -1,6 +1,12 @@
 package com.example.demo.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.demo.model.RiskScore;
+import com.example.demo.model.*;
+import org.springframework.data.jpa.repository.*;
+import org.springframework.stereotype.*;
+import java.util.Optional;
 
-public interface RiskScoreRepository extends JpaRepository<RiskScore, Long> {}
+
+@Repository
+public interface RiskScoreRepository extends JpaRepository<RiskScore, Long> {
+    Optional<RiskScore> findByVisitorId(Long visitorId);
+}

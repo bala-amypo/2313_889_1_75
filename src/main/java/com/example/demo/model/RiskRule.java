@@ -1,68 +1,47 @@
 package com.example.demo.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
+import lombok.*;
 
 @Entity
-@Table(name="risk_rule")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class RiskRule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String ruleName;
-    private String AFTER_HOURS;
-    private String FREQUENT_VISITS;
-    private String BLACKLIST;
-    private String KEYWORD;
-    private String CUSTOM;
 
-    @Min(0)
-    private int threshold;
+    @Column(nullable = false)
+    private String ruleType;
 
-    @Min(0)
-    private int scoreImpact;
+    private Integer threshold;
 
-    private LocalDate createdAt;
+    private Integer scoreImpact;
 
-    // Constructors
-    public RiskRule() {}
+    private LocalDateTime createdAt;
 
-    public RiskRule(Long id, String ruleName, String AFTER_HOURS, String FREQUENT_VISITS, String BLACKLIST,
-                    String KEYWORD, String CUSTOM, int threshold, int scoreImpact, LocalDate createdAt) {
-        this.id = id;
-        this.ruleName = ruleName;
-        this.AFTER_HOURS = AFTER_HOURS;
-        this.FREQUENT_VISITS = FREQUENT_VISITS;
-        this.BLACKLIST = BLACKLIST;
-        this.KEYWORD = KEYWORD;
-        this.CUSTOM = CUSTOM;
-        this.threshold = threshold;
-        this.scoreImpact = scoreImpact;
-        this.createdAt = createdAt;
+    @PrePersist
+    protected void prePersist() {
+        if (ruleName == null || ruleName.isBlank()) {
+            throw new RuntimeException("ruleName required");
+        }
+        if (ruleType == null || ruleType.isBlank()) {
+            throw new RuntimeException("ruleType required");
+        }
+        if (threshold < 0) {
+            throw new RuntimeException("threshold must be greater than 0");
+        }
+        if (scoreImpact == 0) {
+            throw new RuntimeException("scoreImpact cannot be 0");
+        }
+        this.createdAt = LocalDateTime.now();
     }
-
-    
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getRuleName() { return ruleName; }
-    public void setRuleName(String ruleName) { this.ruleName = ruleName; }
-    public String getAFTER_HOURS() { return AFTER_HOURS; }
-    public void setAFTER_HOURS(String AFTER_HOURS) { this.AFTER_HOURS = AFTER_HOURS; }
-    public String getFREQUENT_VISITS() { return FREQUENT_VISITS; }
-    public void setFREQUENT_VISITS(String FREQUENT_VISITS) { this.FREQUENT_VISITS = FREQUENT_VISITS; }
-    public String getBLACKLIST() { return BLACKLIST; }
-    public void setBLACKLIST(String BLACKLIST) { this.BLACKLIST = BLACKLIST; }
-    public String getKEYWORD() { return KEYWORD; }
-    public void setKEYWORD(String KEYWORD) { this.KEYWORD = KEYWORD; }
-    public String getCUSTOM() { return CUSTOM; }
-    public void setCUSTOM(String CUSTOM) { this.CUSTOM = CUSTOM; }
-    public int getThreshold() { return threshold; }
-    public void setThreshold(int threshold) { this.threshold = threshold; }
-    public int getScoreImpact() { return scoreImpact; }
-    public void setScoreImpact(int scoreImpact) { this.scoreImpact = scoreImpact; }
-    public LocalDate getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDate createdAt) { this.createdAt = createdAt; }
 }

@@ -1,38 +1,45 @@
 package com.example.demo.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
+import lombok.*;
 
 @Entity
-@Table(name="score_audit_log")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ScoreAuditLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Min(0)
-    private int scoreChange;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "visitor_id", nullable = false)
+    private Visitor visitor;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "riskrule_id", nullable = true)
+    private RiskRule appliedRule;
+
+    private Integer scoreChange;
+
+    @Column(nullable = false)
     private String reason;
-    private LocalDate loggedAt;
 
-    public ScoreAuditLog() {}
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime loggedAt;
 
-    public ScoreAuditLog(Long id, int scoreChange, String reason, LocalDate loggedAt) {
-        this.id = id;
-        this.scoreChange = scoreChange;
-        this.reason = reason;
-        this.loggedAt = loggedAt;
+    @PrePersist
+    protected void prePersist() {
+        if (reason == null || reason.isBlank()) {
+            throw new IllegalArgumentException("reason required");
+        }
+        if (scoreChange < 0) {
+            throw new IllegalArgumentException("scoreChange must be >= 0");
+        }
+        this.loggedAt = LocalDateTime.now();
     }
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public int getScoreChange() { return scoreChange; }
-    public void setScoreChange(int scoreChange) { this.scoreChange = scoreChange; }
-    public String getReason() { return reason; }
-    public void setReason(String reason) { this.reason = reason; }
-    public LocalDate getLoggedAt() { return loggedAt; }
-    public void setLoggedAt(LocalDate loggedAt) { this.loggedAt = loggedAt; }
 }

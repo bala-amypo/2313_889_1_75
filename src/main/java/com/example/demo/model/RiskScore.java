@@ -1,52 +1,53 @@
 package com.example.demo.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
+import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity
-@Table(name="risk_score")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class RiskScore {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Min(0)
-    private int totalScore;
+    @OneToOne(optional = false)
+    @JoinColumn(name = "visitor_id", nullable = false, unique = true)
+    @JsonIgnoreProperties({"visitLogs"})
+    private Visitor visitor;
 
-    private String LOW;
-    private String MEDIUM;
-    private String HIGH;
-    private String CRITICAL;
+    private Integer totalScore;
 
-    private LocalDate evaluatedAt;
+    @Column(nullable = false)
+    private String riskLevel;
 
-    public RiskScore() {}
+    private LocalDateTime evaluatedAt;
 
-    public RiskScore(Long id, int totalScore, String LOW, String MEDIUM, String HIGH, String CRITICAL, LocalDate evaluatedAt) {
-        this.id = id;
-        this.totalScore = totalScore;
-        this.LOW = LOW;
-        this.MEDIUM = MEDIUM;
-        this.HIGH = HIGH;
-        this.CRITICAL = CRITICAL;
-        this.evaluatedAt = evaluatedAt;
+    @OneToOne
+    @JoinColumn(name = "riskrule_id", nullable = false)
+    private RiskRule riskRule;
+
+    @PrePersist
+    protected void prePersist() {
+        if (visitor == null) {
+            throw new RuntimeException("visitor required");
+        }
+        if (totalScore < 0) {
+            throw new RuntimeException("totalScore cannot be negative");
+        }
+        if (riskLevel == null || riskLevel.isBlank()) {
+            throw new RuntimeException("riskLevel required");
+        }
+        if (this.evaluatedAt == null) {
+            this.evaluatedAt = LocalDateTime.now();
+        }
     }
 
-    // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public int getTotalScore() { return totalScore; }
-    public void setTotalScore(int totalScore) { this.totalScore = totalScore; }
-    public String getLOW() { return LOW; }
-    public void setLOW(String LOW) { this.LOW = LOW; }
-    public String getMEDIUM() { return MEDIUM; }
-    public void setMEDIUM(String MEDIUM) { this.MEDIUM = MEDIUM; }
-    public String getHIGH() { return HIGH; }
-    public void setHIGH(String HIGH) { this.HIGH = HIGH; }
-    public String getCRITICAL() { return CRITICAL; }
-    public void setCRITICAL(String CRITICAL) { this.CRITICAL = CRITICAL; }
-    public LocalDate getEvaluatedAt() { return evaluatedAt; }
-    public void setEvaluatedAt(LocalDate evaluatedAt) { this.evaluatedAt = evaluatedAt; }
 }

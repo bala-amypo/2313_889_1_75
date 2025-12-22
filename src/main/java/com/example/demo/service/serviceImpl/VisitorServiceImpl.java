@@ -1,27 +1,31 @@
-package com.example.demo.service.serviceImpl;
+package com.example.demo.service;
 
-import java.util.List;
-import org.springframework.stereotype.Service;
-import com.example.demo.model.Visitor;
-import com.example.demo.repository.VisitorRepository;
-import com.example.demo.service.VisitorService;
+import com.example.demo.model.*;
+import com.example.demo.repository.*;
+import org.springframework.stereotype.*;
+import java.util.*;
 
 @Service
 public class VisitorServiceImpl implements VisitorService {
 
-    private final VisitorRepository rep;
+    private final VisitorRepository visitorRepository;
 
-    public VisitorServiceImpl(VisitorRepository rep) { this.rep = rep; }
-
-    @Override
-    public Visitor postdata(Visitor st) { return rep.save(st); }
-
-    @Override
-    public List<Visitor> getdata() { return rep.findAll(); }
+    public VisitorServiceImpl(VisitorRepository visitorRepository) {
+        this.visitorRepository = visitorRepository;
+    }
 
     @Override
-    public Visitor getidvalue(Long id) {
-        return rep.findById(id)
-                  .orElseThrow(() -> new RuntimeException("Visitor not found with id: " + id));
+    public Visitor createVisitor(Visitor visitor) {
+        return visitorRepository.save(visitor);
+    }
+
+    @Override
+    public Visitor getVisitor(Long id) {
+        return visitorRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Visitor> getAllVisitors() {
+        return visitorRepository.findAll();
     }
 }

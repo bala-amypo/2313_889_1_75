@@ -1,27 +1,33 @@
-package com.example.demo.service.serviceImpl;
+package com.example.demo.service.impl;
 
-import java.util.List;
-import org.springframework.stereotype.Service;
-import com.example.demo.model.RiskRule;
-import com.example.demo.repository.RiskRuleRepository;
-import com.example.demo.service.RiskRuleService;
+import com.example.demo.model.*;
+import com.example.demo.repository.*;
+import com.example.demo.service.*;
+import org.springframework.stereotype.*;
+import java.util.*;
 
 @Service
 public class RiskRuleServiceImpl implements RiskRuleService {
 
-    private final RiskRuleRepository rep;
+    private final RiskRuleRepository riskRuleRepository;
 
-    public RiskRuleServiceImpl(RiskRuleRepository rep) { this.rep = rep; }
-
-    @Override
-    public RiskRule postdata(RiskRule st) { return rep.save(st); }
-
-    @Override
-    public List<RiskRule> getdata() { return rep.findAll(); }
+    public RiskRuleServiceImpl(RiskRuleRepository riskRuleRepository) {
+        this.riskRuleRepository = riskRuleRepository;
+    }
 
     @Override
-    public RiskRule getidvalue(Long id) {
-        return rep.findById(id)
-                  .orElseThrow(() -> new RuntimeException("RiskRule not found with id: " + id));
+    public RiskRule createRule(RiskRule rule) {
+        return riskRuleRepository.save(rule);
+    }
+
+    @Override
+    public List<RiskRule> getAllRules() {
+        return riskRuleRepository.findAll();
+    }
+
+    @Override
+    public RiskRule getRule(Long id) {
+        return riskRuleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("RiskRule not found"));
     }
 }

@@ -20,17 +20,18 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
-        try {
-            User user = userService.register(request);
-            return ResponseEntity.ok(user);
-        } catch (RuntimeException e) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(e.getMessage());
-        }
+   @PostMapping("/register")
+public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+    try {
+        User user = userService.register(request);
+        return ResponseEntity.ok(user);
+    } catch (RuntimeException e) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT) // ✅ REQUIRED
+                .body(e.getMessage());
     }
+}
+
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {

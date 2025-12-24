@@ -42,19 +42,14 @@ public class VisitLog {
             this.entryTime = LocalDateTime.now();
         }
 
-        this.createdAt = LocalDateTime.now();
-
-        if (purpose == null || purpose.isBlank()) {
-            throw new IllegalArgumentException("purpose is required");
-        }
-        if (location == null || location.isBlank()) {
-            throw new IllegalArgumentException("location is required");
+        if (this.createdAt == null) {
+            this.createdAt = LocalDateTime.now();
         }
     }
 
     @PreUpdate
     protected void preUpdate() {
-        if (exitTime != null && !exitTime.isAfter(entryTime)) {
+        if (exitTime != null && entryTime != null && !exitTime.isAfter(entryTime)) {
             throw new IllegalArgumentException("exitTime must be after entryTime");
         }
     }

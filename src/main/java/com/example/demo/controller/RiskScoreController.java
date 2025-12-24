@@ -6,8 +6,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.*;
 import java.util.*;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+
 @RestController
 @RequestMapping("/api/risk-scores")
+@Tag(name = "Risk Scores", description = "Risk score evaluation APIs")
 public class RiskScoreController {
 
     private final RiskScoreService riskScoreService;

@@ -26,13 +26,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User register(RegisterRequest request) {
-        User user = new User();
-        user.setEmail(request.getEmail());
-        user.setPassword("dummy");
-        user.setRole(Set.of("ROLE_USER"));
-        return user;
+public User register(RegisterRequest request) {
+
+    if (userRepository.existsByEmail(request.getEmail())) {
+        throw new RuntimeException("Email already exists"); // ✅ REQUIRED
     }
+
+    User user = User.builder()
+            .email(request.getEmail())
+            .password(request.getPassword())
+            .name(request.getName())
+            .build();
+
+    return userRepository.save(user);
+}
+
 
     @Override
     public AuthResponse login(AuthRequest request) {

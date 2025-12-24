@@ -7,6 +7,9 @@ import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 
 import java.util.Set;
 
@@ -27,14 +30,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User register(RegisterRequest request) {
-        if (userRepository.existsByEmail(request.getEmail())) {
-        throw new RuntimeException("Email already exists"); // MUST happen
-    }
-        User user = new User();
-        user.setEmail(request.getEmail());
-        user.setPassword("dummy");
-        user.setRole(Set.of("ROLE_USER"));
-        return user;
+
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Email already exists"
+            );
+        }
+
+        User user = User.builder()
+                .email(request.getEmail())
+                .password(passwordEncoder.encode("dummy"))
+                .role(
+                    request.getRoles() != null
+                        ? request.getRoles()
+                        : Set.of("ROLE_USER")
+                )
+                .build();
+
+        return userRepository.save(user);
     }
 
     @Override

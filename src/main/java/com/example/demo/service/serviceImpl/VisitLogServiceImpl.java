@@ -23,6 +23,15 @@ public class VisitLogServiceImpl implements VisitLogService {
 
     @Override
     public VisitLog createVisitLog(Long visitorId, VisitLog log) {
+
+        if (log.getPurpose() == null || log.getPurpose().isBlank()) {
+            throw new IllegalArgumentException("purpose is required");
+        }
+
+        if (log.getLocation() == null || log.getLocation().isBlank()) {
+            throw new IllegalArgumentException("location is required");
+        }
+
         Visitor visitor = visitorRepository.findById(visitorId)
                 .orElseThrow(() -> new ResourceNotFoundException("Visitor not found"));
         log.setVisitor(visitor);

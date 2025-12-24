@@ -7,11 +7,9 @@ import org.springframework.http.*;
 import java.util.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-
-
+@Tag(name = "Score Audit Log Controller")
 @RestController
 @RequestMapping("/api/score-logs")
-@Tag(name = "Score Audit Logs", description = "Score audit log APIs")
 public class ScoreAuditLogController {
 
     private final ScoreAuditLogService scoreAuditLogService;

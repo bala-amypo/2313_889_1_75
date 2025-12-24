@@ -8,11 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-
-
+@Tag(name = "Visit Log Controller")
 @RestController
 @RequestMapping("/api/visit-logs")
-@Tag(name = "Visit Logs", description = "Visitor entry and exit logs")
 public class VisitLogController {
 
     private final VisitLogService visitLogService;

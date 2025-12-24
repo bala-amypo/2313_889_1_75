@@ -5,13 +5,11 @@ import com.example.demo.service.RiskRuleService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.*;
 import java.util.*;
-
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-
+@Tag(name = "Risk Rule Controller")
 @RestController
 @RequestMapping("/api/risk-rules")
-@Tag(name = "Risk Rules", description = "Risk rule management APIs")
 public class RiskRuleController {
 
     private final RiskRuleService riskRuleService;

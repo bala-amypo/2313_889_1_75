@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-
 import java.util.Set;
 
 @Service
@@ -40,11 +39,11 @@ public class UserServiceImpl implements UserService {
 
         User user = User.builder()
                 .email(request.getEmail())
-                .password(passwordEncoder.encode("dummy"))
+                .password(passwordEncoder.encode(request.getPassword()))
                 .role(
-                    request.getRoles() != null
-                        ? request.getRoles()
-                        : Set.of("ROLE_USER")
+                        request.getRoles() != null
+                                ? request.getRoles()
+                                : Set.of("ROLE_USER")
                 )
                 .build();
 
@@ -53,11 +52,38 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AuthResponse login(AuthRequest request) {
-        return new AuthResponse("dummy-token", request.getEmail(), Set.of("ROLE_USER"));
+
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.UNAUTHORIZED,
+                        "Invalid email or password"
+                ));
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED,
+                    "Invalid email or password"
+            );
+        }
+
+        String token = jwtTokenProvider.generateToken(
+                user.getEmail(),
+                user.getRole()
+        );
+
+        return new AuthResponse(
+                token,
+                user.getEmail(),
+                user.getRole()
+        );
     }
 
     @Override
     public User getByEmail(String email) {
-        return null;
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "User not found"
+                ));
     }
 }

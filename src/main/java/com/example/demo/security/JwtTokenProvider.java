@@ -1,26 +1,41 @@
 package com.example.demo.security;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.security.Key;
+import java.util.Date;
 import java.util.Set;
 
 @Component
 public class JwtTokenProvider {
 
-    public String createToken(Long userId, String email, Set<String> roles) {
-        return "dummy-jwt-token";
+    // Secret key (for demo purpose only)
+    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+
+    private final long EXPIRATION_TIME = 24 * 60 * 60 * 1000; // 1 day
+
+    public String generateToken(String email, Set<String> roles) {
+
+        return Jwts.builder()
+                .setSubject(email)
+                .claim("roles", roles)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(key)
+                .compact();
     }
 
-    public boolean validateToken(String token) {
-        return token != null && !token.isBlank();
-    }
+    public String getEmailFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
 
-    public Map<String, Object> getClaims(String token) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("token", token);
-        claims.put("valid", validateToken(token));
-        return claims;
+        return claims.getSubject();
     }
 }
